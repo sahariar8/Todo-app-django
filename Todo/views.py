@@ -13,7 +13,7 @@ def home(request):
 
 def addTask(request):
     if request.method == 'POST':
-        title = request.POST.get('title')
+        title = request.POST['title']
         if title:
             Todo.objects.create(title=title)
     return redirect('home')
@@ -35,7 +35,7 @@ def editTask(request, pk):
     task = get_object_or_404(Todo,id=pk)
 
     if request.method == 'POST':
-        title = request.POST.get('title')
+        title = request.POST['title']
         if title:
             task.title = title
             task.save()
@@ -48,6 +48,6 @@ def editTask(request, pk):
             
 
 def deleteTask(request, pk):
-    task = Todo.objects.get(Todo,id=pk)
+    task = get_object_or_404(Todo,id=pk)
     task.delete()
     return redirect('home')
